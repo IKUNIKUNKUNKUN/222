@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>生日快乐！</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fffbe6;
+      overflow: hidden;
+      text-align: center;
+    }
+    h1 {
+      margin-top: 100px;
+      font-size: 2.2rem;
+    }
+    .button-container {
+      margin-top: 80px;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+    }
+    button {
+      padding: 20px 40px;
+      font-size: 18px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+    #yesBtn {
+      background-color: #ff9aa2;
+    }
+    #noBtn {
+      background-color: #a2d2ff;
+    }
+    .balloon {
+      width: 50px;
+      height: 70px;
+      background: radial-gradient(circle at 30% 30%, #ff8fab, #ff3e6c);
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      position: absolute;
+      animation: float 6s linear infinite;
+      z-index: 0;
+    }
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) translateX(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-150vh) translateX(20px);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>你喜欢哪个按钮？</h1>
+  <div class="button-container">
+    <button id="noBtn">不是这个</button>
+    <button id="yesBtn">这个才对</button>
+  </div>
+
+  <script>
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    let scale = 1;
+
+    noBtn.addEventListener('click', () => {
+      scale += 0.3;
+      yesBtn.style.transform = `scale(${scale})`;
+      if (scale > 3) {
+        yesBtn.innerText = "快点我！";
+      }
+    });
+
+    yesBtn.addEventListener('click', () => {
+      document.body.innerHTML = `
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;background:#fff0f5;position:relative;overflow:hidden;">
+          <h1 style="font-size: 2.8rem; color: #ff4081;">🎉 生日快乐 🎂</h1>
+          <button onclick="window.location.reload()" style="margin-top: 30px; padding: 10px 20px; font-size: 16px; background:#ffd166; border:none; border-radius:8px;">再来一次</button>
+        </div>
+      `;
+
+      // 播放生日快乐歌（纯音乐无版权）
+      const music = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
+      music.play();
+
+      // 添加气球
+      for (let i = 0; i < 20; i++) {
+        const balloon = document.createElement('div');
+        balloon.className = 'balloon';
+        balloon.style.left = Math.random() * 100 + 'vw';
+        balloon.style.animationDuration = (6 + Math.random() * 4) + 's';
+        document.body.appendChild(balloon);
+      }
+    });
+  </script>
+</body>
+</html>
